@@ -1,17 +1,27 @@
+tool 
 extends Node2D
 
-export(String) var letter = "A" setget set_letter, get_letter
+## Exports ##
+
+export(String) var character = "A" setget set_character, get_character
+
+## Nodes ##
+
 onready var label = get_node("label")
 
-
+## Callbacks ##
 
 func _ready():
-	set_letter(letter)
+	set_character(character)
 
-func set_letter(new_letter):
-	letter = new_letter
-	if label:
-		label.set_text(letter)
+## Getters/Setters ##
 
-func get_letter(new_letter):
-	return letter
+func set_character(new_character):
+	""" Sets the character displayed of the letter """
+	character = new_character
+	if label: # Might get called while still outside the tree
+		label.set_text(character.to_upper())
+
+func get_character(new_character):
+	""" Gets the character last set by set_character """
+	return character

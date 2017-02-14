@@ -6,7 +6,7 @@
 [node name="letter" type="Node2D"]
 
 script/script = ExtResource( 1 )
-letter = "A"
+character = "A"
 
 [node name="backdrop" type="Panel" parent="."]
 

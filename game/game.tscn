@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=1]
+[gd_scene load_steps=3 format=1]
 
 [ext_resource path="res://game/letter_grid.gd" type="Script" id=1]
+[ext_resource path="res://objects/letter.tscn" type="PackedScene" id=2]
 
 [node name="game" type="Node2D"]
 
@@ -23,9 +24,10 @@ drag_margin/top = 0.2
 drag_margin/right = 0.2
 drag_margin/bottom = 0.2
 
-[node name="lettergrid" type="Node2D" parent="."]
+[node name="letter_grid" type="Node2D" parent="."]
 
 script/script = ExtResource( 1 )
+letter_scene = ExtResource( 2 )
 width = 10
 height = 10
 letter_spacing = Vector2( 60, 60 )
