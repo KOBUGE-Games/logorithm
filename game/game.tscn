@@ -1,0 +1,33 @@
+[gd_scene load_steps=2 format=1]
+
+[ext_resource path="res://game/letter_grid.gd" type="Script" id=1]
+
+[node name="game" type="Node2D"]
+
+[node name="camera" type="Camera2D" parent="."]
+
+anchor_mode = 1
+rotating = false
+current = true
+zoom = Vector2( 1, 1 )
+limit/left = -10000000
+limit/top = -10000000
+limit/right = 10000000
+limit/bottom = 10000000
+drag_margin/h_enabled = true
+drag_margin/v_enabled = true
+smoothing/enable = false
+smoothing/speed = 5.0
+drag_margin/left = 0.2
+drag_margin/top = 0.2
+drag_margin/right = 0.2
+drag_margin/bottom = 0.2
+
+[node name="lettergrid" type="Node2D" parent="."]
+
+script/script = ExtResource( 1 )
+width = 10
+height = 10
+letter_spacing = Vector2( 60, 60 )
+
+
