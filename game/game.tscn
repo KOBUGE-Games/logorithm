@@ -1,7 +1,21 @@
-[gd_scene load_steps=3 format=1]
+[gd_scene load_steps=5 format=1]
 
 [ext_resource path="res://game/letter_grid.gd" type="Script" id=1]
 [ext_resource path="res://objects/letter.tscn" type="PackedScene" id=2]
+[ext_resource path="res://game/drag_panel.gd" type="Script" id=3]
+
+[sub_resource type="StyleBoxFlat" id=1]
+
+content_margin/left = -1.0
+content_margin/right = -1.0
+content_margin/top = -1.0
+content_margin/bottom = -1.0
+bg_color = Color( 0.226562, 0.226562, 0.226562, 1 )
+light_color = Color( 0.8, 0.8, 0.8, 1 )
+dark_color = Color( 0.8, 0.8, 0.8, 1 )
+border_size = 0
+border_blend = true
+draw_bg = true
 
 [node name="game" type="Node2D"]
 
@@ -31,5 +45,21 @@ letter_scene = ExtResource( 2 )
 width = 10
 height = 10
 letter_spacing = Vector2( 60, 60 )
+click_radius_multiplier = 0.8
+
+[node name="drag_panel" type="Panel" parent="."]
+
+visibility/opacity = 0.0
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 40.0
+margin/bottom = 40.0
+custom_styles/panel = SubResource( 1 )
+script/script = ExtResource( 3 )
+letter_grid_path = NodePath("../letter_grid")
 
 

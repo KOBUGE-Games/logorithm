@@ -6,6 +6,7 @@ export(PackedScene) var letter_scene # The scene to use for individual letters
 export(int) var width = 10 # Size of the playing field on X
 export(int) var height = 10 # Size of the playing field on Y
 export(Vector2) var letter_spacing = Vector2(60, 60) # Spacing between centers of individual letters
+export(float) var click_radius_multiplier = 0.8 # Multiplier for the click radius (1 = circle with letter_spacing radius)
 
 ## State variables ##
 
@@ -42,3 +43,18 @@ func add_letter(position):
 	
 	add_child(letter)
 	letters[position] = letter
+
+func get_letter_at_pos(position):
+	""" Helper to get the letter at a given _global_ position """
+	var local_position = position / letter_spacing - Vector2(0.5, 0.5)
+	var snapped_position = local_position.snapped(Vector2(1, 1))
+	var distance = local_position.distance_to(snapped_position)
+	
+	if letters.has(snapped_position) and distance < 0.5 * click_radius_multiplier:
+		return letters[snapped_position]
+	else:
+		return null
+
+func get_size():
+	""" Helper to get the size taken by the grid """
+	return Vector2(width, height) * letter_spacing

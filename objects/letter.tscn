@@ -7,6 +7,7 @@
 
 script/script = ExtResource( 1 )
 character = "A"
+highlight = false
 
 [node name="backdrop" type="Panel" parent="."]
 
