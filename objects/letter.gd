@@ -42,14 +42,17 @@ func set_highlight(new_highlight):
 	if backdrop:
 		backdrop.set_frame_color(highlight_color if highlight else backdrop_color)
 
-func toggle_highlight():
-	set_highlight(!highlight)
-
 func is_highlighted():
 	return highlight
 
 ## Functions ##
 
+func adjoins(some_letter):
+	""" Helper to check the letter is adjacent to the one given as argument """
+	var distance = self.get_pos() - some_letter.get_pos()
+	# FIXME: Dehardcode those ugly numbers, ideally expose coordinates from letter_grid
+	return (abs(distance.x) < 61 and abs(distance.y) < 61)
+
 func select():
-	toggle_highlight()
+	""" Handles an attempt at (un)selecting the letter """
 	emit_signal("letter_selected", self)
