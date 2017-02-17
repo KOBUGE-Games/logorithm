@@ -7,9 +7,11 @@
 
 script/script = ExtResource( 1 )
 character = "A"
+backdrop_color = Color( 0.15, 0.15, 0.16, 1 )
+highlight_color = Color( 0.4, 0.4, 0.3, 1 )
 highlight = false
 
-[node name="backdrop" type="Panel" parent="."]
+[node name="backdrop" type="ColorFrame" parent="."]
 
 focus/ignore_mouse = false
 focus/stop_mouse = true
@@ -19,6 +21,7 @@ margin/left = -27.0
 margin/top = -27.0
 margin/right = 27.0
 margin/bottom = 27.0
+color = Color( 0.15, 0.15, 0.17, 1 )
 
 [node name="label" type="Label" parent="."]
 

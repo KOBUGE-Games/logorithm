@@ -40,7 +40,7 @@ func add_letter(position):
 	var letter = letter_scene.instance()
 	letter.set_pos((position - Vector2(width - 1, height - 1) / 2) * letter_spacing)
 	letter.set_character(language_pack.pick_random_character())
-	
+
 	add_child(letter)
 	letters[position] = letter
 
@@ -49,7 +49,7 @@ func get_letter_at_pos(position):
 	var local_position = position / letter_spacing - Vector2(0.5, 0.5)
 	var snapped_position = local_position.snapped(Vector2(1, 1))
 	var distance = local_position.distance_to(snapped_position)
-	
+
 	if letters.has(snapped_position) and distance < 0.5 * click_radius_multiplier:
 		return letters[snapped_position]
 	else:

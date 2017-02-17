@@ -23,5 +23,5 @@ func _input_event(event):
 		if event.button_index == BUTTON_LEFT and event.is_pressed() and !event.is_echo():
 			var letter = letter_grid.get_letter_at_pos(event.pos)
 			if letter != null:
-				letter.set_highlight(true)
+				letter.select()
 				accept_event()
