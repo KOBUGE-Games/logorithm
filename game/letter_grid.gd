@@ -38,6 +38,7 @@ func clean_grid():
 func add_letter(position):
 	""" Helper to add a letter at a given position """
 	var letter = letter_scene.instance()
+	letter.position = position
 	letter.set_pos((position - Vector2(width - 1, height - 1) / 2) * letter_spacing)
 	letter.set_character(language_pack.pick_random_character())
 
@@ -58,11 +59,10 @@ func get_letter_at_pos(position):
 func free_letters(letters_array):
 	""" Removes the given letters from private dictionary """
 	# TODO: Reorder the grid, spawn new letters
-	# FIXME: This is ugly, add position data to the letter and use it
-	for position in letters.keys():
-		if letters[position] in letters_array:
-			letters[position].queue_free()
-			letters.erase(position)
+	for letter in letters_array:
+		if letters.has(letter.position):
+			letters.erase(letter.position)
+		letter.queue_free()
 
 func get_size():
 	""" Helper to get the size taken by the grid """

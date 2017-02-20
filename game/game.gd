@@ -13,7 +13,7 @@ var valid_word = false
 ## Callbacks ##
 
 func _ready():
-	pass
+	get_node("drag_panel").connect("letter_selected", self, "update_selection")
 
 ## Functions ##
 
@@ -39,42 +39,56 @@ func score_word():
 	selection_letters = []
 	selection_string = ""
 
-func on_letter_selected(letter):
-	""" Handle the letter_selected signal from the letter nodes """
+func update_selection(letter, is_drag):
+	""" Handle the letter_selected signal from the drag panel """
 	var orig_selection = []
 	for letter in selection_letters:
 		orig_selection.append(letter)
 	var orig_valid = valid_word
-
-	if letter in selection_letters:
-		if letter == selection_letters.back(): # last selected letter
-			if valid_word: # confirm word, get points
-				score_word()
-			else: # unselect letter
+	
+	if letter == null:
+		if valid_word:
+			score_word() # Just score
+	elif letter in selection_letters:
+		if is_drag:
+			if letter == selection_letters.back(): # same letter
+				return
+			if selection_letters.size() > 1 and letter == selection_letters[selection_letters.size() - 2]:
+				# unselect letter
 				selection_letters.pop_back()
 				selection_string = selection_string.substr(0, selection_string.length() - 1)
-		else: # discard whole selection
-			selection_letters = []
-			selection_string = ""
-	elif selection_string.empty() or letter.adjoins(selection_letters.back()): # add new letter
+		else:
+			if letter == selection_letters.back(): # last selected letter
+				if valid_word: # confirm word, get points
+					score_word()
+				else: # unselect letter
+					selection_letters.pop_back()
+					selection_string = selection_string.substr(0, selection_string.length() - 1)
+			else: # discard whole selection
+				selection_letters = []
+				selection_string = ""
+	elif selection_letters.size() == 0 or letter.adjoins(selection_letters.back()): # add new letter
 		selection_letters.append(letter)
 		selection_string += letter.get_character()
 		letter.set_highlight(true)
+	elif is_drag: # remake selection
+		selection_letters = [letter]
+		selection_string = letter.get_character()
+		letter.set_highlight(true)
 	else:
 		return
-
-	if language_pack.has_word(selection_string):
-		print("%s is a valid word." % selection_string)
-		valid_word = true
-	elif valid_word:
-		valid_word = false
+	
+	valid_word = language_pack.has_word(selection_string)
 
 	# Clear animations
 	for letter in orig_selection:
 		if !letter.is_queued_for_deletion():
 			letter.reset()
-	for letter in selection_letters:
+	for i in range(selection_letters.size()):
+		var letter = selection_letters[i]
 		letter.set_highlight(true)
+		if i + 1 < selection_letters.size():
+			letter.set_next_direction(selection_letters[i + 1].position - letter.position)
 		if valid_word:
 			letter.get_node("animation").play("glow")
 	if valid_word:
