@@ -28,6 +28,19 @@ backdrop_color = Color( 0.15, 0.15, 0.16, 1 )
 highlight_color = Color( 0.4, 0.4, 0.3, 1 )
 highlight = false
 
+[node name="outline" type="ColorFrame" parent="."]
+
+visibility/visible = false
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = -32.0
+margin/top = -32.0
+margin/right = 32.0
+margin/bottom = 32.0
+color = Color( 0.9, 0.9, 0.75, 0.8 )
+
 [node name="backdrop" type="ColorFrame" parent="."]
 
 focus/ignore_mouse = false

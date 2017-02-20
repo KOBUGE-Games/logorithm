@@ -55,6 +55,15 @@ func get_letter_at_pos(position):
 	else:
 		return null
 
+func free_letters(letters_array):
+	""" Removes the given letters from private dictionary """
+	# TODO: Reorder the grid, spawn new letters
+	# FIXME: This is ugly, add position data to the letter and use it
+	for position in letters.keys():
+		if letters[position] in letters_array:
+			letters[position].queue_free()
+			letters.erase(position)
+
 func get_size():
 	""" Helper to get the size taken by the grid """
 	return Vector2(width, height) * letter_spacing

@@ -56,3 +56,9 @@ func adjoins(some_letter):
 func select():
 	""" Handles an attempt at (un)selecting the letter """
 	emit_signal("letter_selected", self)
+
+func reset():
+	""" Resets letter node to default visual state """
+	set_highlight(false)
+	get_node("outline").hide()
+	get_node("animation").stop()

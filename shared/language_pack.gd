@@ -37,6 +37,10 @@ func get_character_list():
 	""" Get the language's character list """
 	return character_list
 
+func get_character_frequency(char):
+	""" Return the frequency of a given character """
+	return character_counts[char] / total_character_count
+
 # FIXME: Rename to load when possible
 func parse_file(path, min_word_length = 3, max_word_length = 100):
 	""" Parse a language pack file, filtering only words between min_word_length and max_word_length """
