@@ -36,7 +36,7 @@ func _process(delta):
 	var new_position = get_pos() + animation_velocity * delta
 	var direction = (animation_position_target - get_pos()).normalized()
 	var new_direction = (animation_position_target - new_position).normalized()
-	
+
 	if direction.dot(new_direction) < -0.5: # If the direction reverses, we must have passed the target
 		set_pos(animation_position_target) # Snap
 		animation_velocity = Vector2()

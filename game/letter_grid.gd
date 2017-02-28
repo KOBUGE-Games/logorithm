@@ -43,9 +43,9 @@ func add_letter(position, animate_from = position):
 	letter.set_character(language_pack.pick_random_character())
 
 	add_child(letter)
-	
+
 	letter.animate_to(get_letter_screen_position(position))
-	
+
 	letter.position = position
 	letters[position] = letter
 
@@ -68,7 +68,7 @@ func free_letters(letters_array):
 		if letters.has(letter.position):
 			letters.erase(letter.position)
 		letter.queue_free()
-	
+
 	reorder_grid(removed_positions)
 	respawn_letters(removed_positions)
 
@@ -78,10 +78,10 @@ func reorder_grid(removed_positions): # Virtual
 	max_removed_elements.resize(width)
 	for column in range(width):
 		max_removed_elements[column] = 0
-	
+
 	for position in removed_positions:
 		max_removed_elements[position.x] = max(max_removed_elements[position.x], position.y)
-	
+
 	for column in range(width):
 		var move_down = 0
 		for row in range(max_removed_elements[column], 0 - 1, -1):
@@ -98,7 +98,7 @@ func respawn_letters(removed_positions): # Virtual
 	removed_counts.resize(width)
 	for column in range(width):
 		removed_counts[column] = 0
-	
+
 	for position in removed_positions:
 		var from = Vector2(position.x, position.y - height - 1)
 		add_letter(Vector2(position.x, removed_counts[position.x]), from)

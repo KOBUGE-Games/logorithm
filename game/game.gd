@@ -45,7 +45,7 @@ func update_selection(letter, is_drag):
 	for letter in selection_letters:
 		orig_selection.append(letter)
 	var orig_valid = valid_word
-	
+
 	if letter == null:
 		if valid_word:
 			score_word() # Just score
@@ -77,7 +77,7 @@ func update_selection(letter, is_drag):
 		letter.set_highlight(true)
 	else:
 		return
-	
+
 	valid_word = language_pack.has_word(selection_string)
 
 	# Clear animations

@@ -37,7 +37,7 @@ func _input_event(event):
 					select_at_event(event, false)
 				else:
 					emit_signal("letter_selected", null, false)
-	
+
 	if event.type == InputEvent.MOUSE_MOTION and dragging:
 		if drag_start.distance_to(event.pos) > min_drag_distance:
 			select_at_event(event, true)
