@@ -2,6 +2,7 @@ extends Reference # Would be nice if this could be a Resource
 
 ## State variables ##
 
+var md5sum = ""
 var words = {}
 var character_list = []
 var character_counts = {}
@@ -40,6 +41,42 @@ func get_character_list():
 func get_character_frequency(char):
 	""" Return the frequency of a given character """
 	return character_counts[char] / total_character_count
+
+func save_binary(binary_path):
+	""" Save language pack to a binary file """
+	var file = File.new()
+	var err = file.open(binary_path, File.WRITE)
+	if err:
+		print("Could not save binary LanguagePack at '%s'.")
+		return err
+
+	file.store_var(md5sum)
+	file.store_var(words)
+	file.store_var(character_list)
+	file.store_var(character_counts)
+	file.store_var(total_character_count)
+	file.close()
+
+	print("LanguagePack: Saved binary '%s' with md5sum '%s'." % [binary_path, md5sum])
+
+func load_binary(binary_path):
+	""" Load language pack from a binary file """
+	var file = File.new()
+	var err = file.open(binary_path, File.READ)
+	if err:
+		print("Could not load binary LanguagePack at '%s'.")
+		return err
+
+	# The read order should be the same as the save order in save_binary
+	md5sum = file.get_var()
+	words = file.get_var()
+	character_list = file.get_var()
+	character_counts = file.get_var()
+	total_character_count = file.get_var()
+	file.close()
+
+	print("LanguagePack: Loaded binary '%s' with md5sum '%s'." % [binary_path, md5sum])
+	return OK
 
 # FIXME: Rename to load when possible
 func parse_file(path, min_word_length = 3, max_word_length = 100):
@@ -81,6 +118,9 @@ func parse_file(path, min_word_length = 3, max_word_length = 100):
 			var word = line.strip_edges()
 			if word.length() >= min_word_length and word.length() <= max_word_length:
 				add_word(word, count_characters)
+	file.close()
+
+	md5sum = file.get_md5(path)
 
 	#print(generate_header())
 
