@@ -28,6 +28,7 @@ backdrop_color = Color( 0.15, 0.15, 0.16, 1 )
 highlight_color = Color( 0.4, 0.4, 0.3, 1 )
 highlight = false
 next_direction = Vector2( 0, 0 )
+animation_acceleration = 600.0
 
 [node name="outline" type="ColorFrame" parent="."]
 

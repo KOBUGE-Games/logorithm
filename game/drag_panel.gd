@@ -45,6 +45,6 @@ func _input_event(event):
 func select_at_event(event, is_drag):
 	""" Helper function to select letters """
 	var letter = letter_grid.get_letter_at_pos(event.pos)
-	if letter != null and !letter.is_queued_for_deletion():
+	if letter != null and !letter.is_queued_for_deletion() and !letter.is_moving():
 		emit_signal("letter_selected", letter, is_drag)
 		accept_event()
