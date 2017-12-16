@@ -4,9 +4,10 @@ extends Node2D
 ## Exports ##
 
 export(String) var character = "A" setget set_character, get_character
+export(bool) var special = false setget set_special, is_special
+export(bool) var highlight = false setget set_highlight, is_highlighted
 export(Color) var backdrop_color = Color(0.15, 0.15, 0.17, 1)
 export(Color) var highlight_color = Color(0.40, 0.40, 0.30, 1)
-export(bool) var highlight = false setget set_highlight, is_highlighted
 export(Vector2) var next_direction = Vector2(0, 0) setget set_next_direction, get_next_direction
 export(float) var animation_acceleration = 1
 
@@ -22,6 +23,7 @@ onready var backdrop = get_node("backdrop")
 onready var label = get_node("label")
 onready var animation = get_node("animation")
 onready var outline = get_node("outline")
+onready var effect = get_node("effect")
 onready var marker = get_node("marker")
 
 ## Callbacks ##
@@ -29,7 +31,8 @@ onready var marker = get_node("marker")
 func _ready():
 	animation_position_target = get_pos()
 	set_character(character)
-	set_highlight(false)
+	set_highlight(highlight)
+	set_special(special)
 	set_next_direction(next_direction)
 
 func _process(delta):
@@ -67,6 +70,16 @@ func set_highlight(new_highlight):
 func is_highlighted():
 	""" Gets the highlight state """
 	return highlight
+
+func set_special(new_special):
+	""" Sets the special/effect state """
+	special = new_special
+	if effect:
+		effect.set_hidden(!special)
+
+func is_special():
+	""" Gets the special/effect state """
+	return special
 
 
 func set_next_direction(new_next_direction):

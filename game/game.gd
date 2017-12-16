@@ -18,17 +18,18 @@ func _ready():
 ## Functions ##
 
 func score_word():
-	""" Calculate score based on characters weight (1/frequency) and length of word """
+	""" Calculate score based on characters weight (1/frequency), special letters and length of word """
 	# TODO: Make a real balanced scoring algorithm
-	var char_weights = []
-	for letter in selection_letters:
-		char_weights.append(1.0 / language_pack.get_character_frequency(letter.get_character()))
-	char_weights.sort() # Higher weights give higher score (non-linear scoring)
-
+	var special_count = 0
 	var word_score = 0
-	var e = exp(1)
-	for i in range(char_weights.size()):
-		word_score += 0.4 * log(e * (i + 1)) * pow(char_weights[i], 0.9)
+	for letter in selection_letters:
+		word_score += log(1.0 / language_pack.get_character_frequency(letter.get_character()))
+		if letter.is_special():
+			special_count += 1
+	
+	word_score *= exp((selection_letters.size() - 2) / 3) * 10
+	word_score *= exp(special_count)
+	
 	word_score = int(word_score)
 	total_score += word_score
 

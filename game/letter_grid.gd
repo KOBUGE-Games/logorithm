@@ -5,6 +5,7 @@ extends Node2D
 export(PackedScene) var letter_scene # The scene to use for individual letters
 export(int) var width = 10 # Size of the playing field on X
 export(int) var height = 10 # Size of the playing field on Y
+export(float) var special_chance = 0.01 # Chance that a letter is "special"
 export(Vector2) var letter_spacing = Vector2(60, 60) # Spacing between centers of individual letters
 export(float) var click_radius_multiplier = 0.8 # Multiplier for the click radius (1 = circle with letter_spacing radius)
 
@@ -41,6 +42,7 @@ func add_letter(position, animate_from = position):
 	var letter = letter_scene.instance()
 	letter.set_pos(get_letter_screen_position(animate_from))
 	letter.set_character(language_pack.pick_random_character())
+	letter.set_special(randf() < special_chance)
 
 	add_child(letter)
 
