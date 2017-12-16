@@ -20,8 +20,7 @@ onready var letter_grid = get_node(letter_grid_path)
 func _ready():
 	# Resize to match the grid
 	var size = letter_grid.get_size()
-	set_size(size)
-	set_pos(-size / 2)
+	set_custom_minimum_size(size)
 	if is_a_parent_of(letter_grid):
 		letter_grid.set_pos(size / 2)
 

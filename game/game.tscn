@@ -1,9 +1,12 @@
-[gd_scene load_steps=6 format=1]
+[gd_scene load_steps=9 format=1]
 
 [ext_resource path="res://game/game.gd" type="Script" id=1]
 [ext_resource path="res://game/letter_grid.gd" type="Script" id=2]
 [ext_resource path="res://objects/letter.tscn" type="PackedScene" id=3]
 [ext_resource path="res://game/drag_panel.gd" type="Script" id=4]
+[ext_resource path="res://game/scores.gd" type="Script" id=5]
+[ext_resource path="res://game/score_font.tres" type="DynamicFont" id=6]
+[ext_resource path="res://game/word_list_font.tres" type="DynamicFont" id=7]
 
 [sub_resource type="StyleBoxFlat" id=1]
 
@@ -47,23 +50,106 @@ script/script = ExtResource( 2 )
 letter_scene = ExtResource( 3 )
 width = 10
 height = 10
+special_chance = 0.01
 letter_spacing = Vector2( 60, 60 )
 click_radius_multiplier = 0.8
 
-[node name="drag_panel" type="Panel" parent="."]
+[node name="gui_layer" type="CanvasLayer" parent="."]
 
-visibility/opacity = 0.0
+layer = 1
+offset = Vector2( 0, 0 )
+rotation = 0.0
+scale = Vector2( 1, 1 )
+
+[node name="gui" type="HBoxContainer" parent="gui_layer"]
+
+anchor/right = 1
+anchor/bottom = 1
 focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
 margin/left = 0.0
 margin/top = 0.0
-margin/right = 40.0
-margin/bottom = 40.0
+margin/right = 0.0
+margin/bottom = 0.0
+alignment = 0
+
+[node name="left" type="Control" parent="gui_layer/gui"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 3
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 208.0
+margin/bottom = 600.0
+
+[node name="drag_panel" type="Panel" parent="gui_layer/gui"]
+
+visibility/opacity = 0.0
+rect/min_size = Vector2( 600, 600 )
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 212.0
+margin/top = 0.0
+margin/right = 812.0
+margin/bottom = 600.0
 custom_styles/panel = SubResource( 1 )
 script/script = ExtResource( 4 )
-letter_grid_path = NodePath("../letter_grid")
+letter_grid_path = NodePath("../../../letter_grid")
 min_drag_distance = 5
+
+[node name="scores" type="VBoxContainer" parent="gui_layer/gui"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 3
+size_flags/vertical = 2
+margin/left = 816.0
+margin/top = 0.0
+margin/right = 1024.0
+margin/bottom = 600.0
+custom_constants/separation = 5
+alignment = 0
+script/script = ExtResource( 5 )
+game_path = NodePath("../../..")
+max_word_list_entries = 10
+
+[node name="score" type="Label" parent="gui_layer/gui/scores"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 208.0
+margin/bottom = 30.0
+custom_fonts/font = ExtResource( 6 )
+text = "000000 pts"
+clip_text = true
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="past_scores" type="Label" parent="gui_layer/gui/scores"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 3
+margin/left = 0.0
+margin/top = 35.0
+margin/right = 208.0
+margin/bottom = 600.0
+custom_fonts/font = ExtResource( 7 )
+clip_text = true
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
 
 

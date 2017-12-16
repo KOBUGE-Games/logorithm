@@ -1,5 +1,9 @@
 extends Node2D
 
+## Signals ##
+
+signal score_changed(last_word, last_word_score)
+
 ## State variables ##
 
 onready var language_pack = LanguagePackManager.get_language_pack("en")
@@ -13,7 +17,7 @@ var valid_word = false
 ## Callbacks ##
 
 func _ready():
-	get_node("drag_panel").connect("letter_selected", self, "update_selection")
+	get_node("gui_layer/gui/drag_panel").connect("letter_selected", self, "update_selection")
 
 ## Functions ##
 
@@ -26,15 +30,14 @@ func score_word():
 		word_score += log(1.0 / language_pack.get_character_frequency(letter.get_character()))
 		if letter.is_special():
 			special_count += 1
-	
+
 	word_score *= exp((selection_letters.size() - 2) / 3) * 10
 	word_score *= exp(special_count)
-	
+
 	word_score = int(word_score)
 	total_score += word_score
 
-	print("Word score: %d" % word_score)
-	print("Total score: %d" % total_score)
+	emit_signal("score_changed", selection_string, word_score)
 
 	get_node("letter_grid").free_letters(selection_letters)
 	selection_letters = []
